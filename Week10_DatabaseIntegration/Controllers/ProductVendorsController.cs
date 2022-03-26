@@ -13,47 +13,47 @@ namespace Week10_DatabaseIntegration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class ProductVendorsController : ControllerBase
     {
         private readonly Adventureworks2019Context _context;
 
-        public PersonController(Adventureworks2019Context context)
+        public ProductVendorsController(Adventureworks2019Context context)
         {
             _context = context;
         }
 
-        // GET: api/Person
+        // GET: api/ProductVendors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> GetPeople()
+        public async Task<ActionResult<IEnumerable<ProductVendor>>> GetProductVendors()
         {
-            return await _context.People.ToListAsync();
+            return await _context.ProductVendors.ToListAsync();
         }
 
-        // GET: api/Person/5
+        // GET: api/ProductVendors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Person>> GetPerson(int id)
+        public async Task<ActionResult<ProductVendor>> GetProductVendor(int id)
         {
-            var person = await _context.People.FindAsync(id);
+            var productVendor = await _context.ProductVendors.FindAsync(id);
 
-            if (person == null)
+            if (productVendor == null)
             {
                 return NotFound();
             }
 
-            return person;
+            return productVendor;
         }
 
-        // PUT: api/Person/5
+        // PUT: api/ProductVendors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(int id, Person person)
+        public async Task<IActionResult> PutProductVendor(int id, ProductVendor productVendor)
         {
-            if (id != person.BusinessEntityId)
+            if (id != productVendor.ProductId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(person).State = EntityState.Modified;
+            _context.Entry(productVendor).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Week10_DatabaseIntegration.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonExists(id))
+                if (!ProductVendorExists(id))
                 {
                     return NotFound();
                 }
@@ -74,19 +74,19 @@ namespace Week10_DatabaseIntegration.Controllers
             return NoContent();
         }
 
-        // POST: api/Person
+        // POST: api/ProductVendors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Person>> PostPerson(Person person)
+        public async Task<ActionResult<ProductVendor>> PostProductVendor(ProductVendor productVendor)
         {
-            _context.People.Add(person);
+            _context.ProductVendors.Add(productVendor);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (PersonExists(person.BusinessEntityId))
+                if (ProductVendorExists(productVendor.ProductId))
                 {
                     return Conflict();
                 }
@@ -96,28 +96,28 @@ namespace Week10_DatabaseIntegration.Controllers
                 }
             }
 
-            return CreatedAtAction("GetPerson", new { id = person.BusinessEntityId }, person);
+            return CreatedAtAction("GetProductVendor", new { id = productVendor.ProductId }, productVendor);
         }
 
-        // DELETE: api/Person/5
+        // DELETE: api/ProductVendors/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson(int id)
+        public async Task<IActionResult> DeleteProductVendor(int id)
         {
-            var person = await _context.People.FindAsync(id);
-            if (person == null)
+            var productVendor = await _context.ProductVendors.FindAsync(id);
+            if (productVendor == null)
             {
                 return NotFound();
             }
 
-            _context.People.Remove(person);
+            _context.ProductVendors.Remove(productVendor);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PersonExists(int id)
+        private bool ProductVendorExists(int id)
         {
-            return _context.People.Any(e => e.BusinessEntityId == id);
+            return _context.ProductVendors.Any(e => e.ProductId == id);
         }
     }
 }

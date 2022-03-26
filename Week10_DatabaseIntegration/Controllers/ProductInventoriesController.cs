@@ -13,47 +13,47 @@ namespace Week10_DatabaseIntegration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VendorsController : ControllerBase
+    public class ProductInventoriesController : ControllerBase
     {
         private readonly Adventureworks2019Context _context;
 
-        public VendorsController(Adventureworks2019Context context)
+        public ProductInventoriesController(Adventureworks2019Context context)
         {
             _context = context;
         }
 
-        // GET: api/Vendors
+        // GET: api/ProductInventories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Vendor>>> GetVendors()
+        public async Task<ActionResult<IEnumerable<ProductInventory>>> GetProductInventories()
         {
-            return await _context.Vendors.ToListAsync();
+            return await _context.ProductInventories.ToListAsync();
         }
 
-        // GET: api/Vendors/5
+        // GET: api/ProductInventories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Vendor>> GetVendor(int id)
+        public async Task<ActionResult<ProductInventory>> GetProductInventory(int id)
         {
-            var vendor = await _context.Vendors.FindAsync(id);
+            var productInventory = await _context.ProductInventories.FindAsync(id);
 
-            if (vendor == null)
+            if (productInventory == null)
             {
                 return NotFound();
             }
 
-            return vendor;
+            return productInventory;
         }
 
-        // PUT: api/Vendors/5
+        // PUT: api/ProductInventories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutVendor(int id, Vendor vendor)
+        public async Task<IActionResult> PutProductInventory(int id, ProductInventory productInventory)
         {
-            if (id != vendor.BusinessEntityId)
+            if (id != productInventory.ProductId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(vendor).State = EntityState.Modified;
+            _context.Entry(productInventory).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Week10_DatabaseIntegration.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VendorExists(id))
+                if (!ProductInventoryExists(id))
                 {
                     return NotFound();
                 }
@@ -74,19 +74,19 @@ namespace Week10_DatabaseIntegration.Controllers
             return NoContent();
         }
 
-        // POST: api/Vendors
+        // POST: api/ProductInventories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Vendor>> PostVendor(Vendor vendor)
+        public async Task<ActionResult<ProductInventory>> PostProductInventory(ProductInventory productInventory)
         {
-            _context.Vendors.Add(vendor);
+            _context.ProductInventories.Add(productInventory);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (VendorExists(vendor.BusinessEntityId))
+                if (ProductInventoryExists(productInventory.ProductId))
                 {
                     return Conflict();
                 }
@@ -96,28 +96,28 @@ namespace Week10_DatabaseIntegration.Controllers
                 }
             }
 
-            return CreatedAtAction("GetVendor", new { id = vendor.BusinessEntityId }, vendor);
+            return CreatedAtAction("GetProductInventory", new { id = productInventory.ProductId }, productInventory);
         }
 
-        // DELETE: api/Vendors/5
+        // DELETE: api/ProductInventories/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVendor(int id)
+        public async Task<IActionResult> DeleteProductInventory(int id)
         {
-            var vendor = await _context.Vendors.FindAsync(id);
-            if (vendor == null)
+            var productInventory = await _context.ProductInventories.FindAsync(id);
+            if (productInventory == null)
             {
                 return NotFound();
             }
 
-            _context.Vendors.Remove(vendor);
+            _context.ProductInventories.Remove(productInventory);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool VendorExists(int id)
+        private bool ProductInventoryExists(int id)
         {
-            return _context.Vendors.Any(e => e.BusinessEntityId == id);
+            return _context.ProductInventories.Any(e => e.ProductId == id);
         }
     }
 }

@@ -13,47 +13,47 @@ namespace Week10_DatabaseIntegration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class DepartmentsController : ControllerBase
     {
         private readonly Adventureworks2019Context _context;
 
-        public ProductsController(Adventureworks2019Context context)
+        public DepartmentsController(Adventureworks2019Context context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Departments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Departments.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Departments/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Department>> GetDepartment(short id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var department = await _context.Departments.FindAsync(id);
 
-            if (product == null)
+            if (department == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return department;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Departments/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutDepartment(short id, Department department)
         {
-            if (id != product.ProductId)
+            if (id != department.DepartmentId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(department).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Week10_DatabaseIntegration.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!DepartmentExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +74,36 @@ namespace Week10_DatabaseIntegration.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Departments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
-            _context.Products.Add(product);
+            _context.Departments.Add(department);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetDepartment", new { id = department.DepartmentId }, department);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Departments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteDepartment(short id)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            var department = await _context.Departments.FindAsync(id);
+            if (department == null)
             {
                 return NotFound();
             }
 
-            _context.Products.Remove(product);
+            _context.Departments.Remove(department);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool DepartmentExists(short id)
         {
-            return _context.Products.Any(e => e.ProductId == id);
+            return _context.Departments.Any(e => e.DepartmentId == id);
         }
     }
 }

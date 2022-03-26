@@ -13,47 +13,47 @@ namespace Week10_DatabaseIntegration.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ContactTypesController : ControllerBase
+    public class AddressTypesController : ControllerBase
     {
         private readonly Adventureworks2019Context _context;
 
-        public ContactTypesController(Adventureworks2019Context context)
+        public AddressTypesController(Adventureworks2019Context context)
         {
             _context = context;
         }
 
-        // GET: api/ContactTypes
+        // GET: api/AddressTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ContactType>>> GetContactTypes()
+        public async Task<ActionResult<IEnumerable<AddressType>>> GetAddressTypes()
         {
-            return await _context.ContactTypes.ToListAsync();
+            return await _context.AddressTypes.ToListAsync();
         }
 
-        // GET: api/ContactTypes/5
+        // GET: api/AddressTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ContactType>> GetContactType(int id)
+        public async Task<ActionResult<AddressType>> GetAddressType(int id)
         {
-            var contactType = await _context.ContactTypes.FindAsync(id);
+            var addressType = await _context.AddressTypes.FindAsync(id);
 
-            if (contactType == null)
+            if (addressType == null)
             {
                 return NotFound();
             }
 
-            return contactType;
+            return addressType;
         }
 
-        // PUT: api/ContactTypes/5
+        // PUT: api/AddressTypes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutContactType(int id, ContactType contactType)
+        public async Task<IActionResult> PutAddressType(int id, AddressType addressType)
         {
-            if (id != contactType.ContactTypeId)
+            if (id != addressType.AddressTypeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(contactType).State = EntityState.Modified;
+            _context.Entry(addressType).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace Week10_DatabaseIntegration.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ContactTypeExists(id))
+                if (!AddressTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +74,36 @@ namespace Week10_DatabaseIntegration.Controllers
             return NoContent();
         }
 
-        // POST: api/ContactTypes
+        // POST: api/AddressTypes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ContactType>> PostContactType(ContactType contactType)
+        public async Task<ActionResult<AddressType>> PostAddressType(AddressType addressType)
         {
-            _context.ContactTypes.Add(contactType);
+            _context.AddressTypes.Add(addressType);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetContactType", new { id = contactType.ContactTypeId }, contactType);
+            return CreatedAtAction("GetAddressType", new { id = addressType.AddressTypeId }, addressType);
         }
 
-        // DELETE: api/ContactTypes/5
+        // DELETE: api/AddressTypes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteContactType(int id)
+        public async Task<IActionResult> DeleteAddressType(int id)
         {
-            var contactType = await _context.ContactTypes.FindAsync(id);
-            if (contactType == null)
+            var addressType = await _context.AddressTypes.FindAsync(id);
+            if (addressType == null)
             {
                 return NotFound();
             }
 
-            _context.ContactTypes.Remove(contactType);
+            _context.AddressTypes.Remove(addressType);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ContactTypeExists(int id)
+        private bool AddressTypeExists(int id)
         {
-            return _context.ContactTypes.Any(e => e.ContactTypeId == id);
+            return _context.AddressTypes.Any(e => e.AddressTypeId == id);
         }
     }
 }
